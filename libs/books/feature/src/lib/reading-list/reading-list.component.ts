@@ -13,6 +13,7 @@ export class ReadingListComponent {
   constructor(private readonly store: Store) {}
 
   removeFromReadingList(item) {
-    this.store.dispatch(removeFromReadingList({ item }));
+    const remove=false;
+    this.store.dispatch(removeFromReadingList({ item ,remove}));
   }
 }

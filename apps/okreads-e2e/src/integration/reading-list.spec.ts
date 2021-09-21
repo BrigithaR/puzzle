@@ -11,4 +11,16 @@ describe('When: I use the reading list feature', () => {
       'My Reading List'
     );
   });
+
+  it('Then: I should undo the added book from reading list',()=>{
+    cy.get('input[type="search"]').type('java');
+
+    cy.get('form').submit();
+
+    cy.contains('Effective Java');
+    
+    cy.contains('Want to Read').click();
+    
+    cy.contains('Undo').click().should('be.enabled','Want to Read');
+   });
 });
