@@ -22,6 +22,20 @@ export const failedAddToReadingList = createAction(
   props<{ book: Book }>()
 );
 
+export const markBookAsRead = createAction(
+  '[Reading List API] Mark read in books',
+  props<{ book: ReadingListItem }>()
+);
+export const failedMarkBookAsRead = createAction(
+  '[Reading List API] Finished list error',
+  props<{ error: string }>()
+);
+
+export const confirmedMarkBookAsRead = createAction(
+  '[Reading List API] Finished list success',
+  props<{ book: Book }>()
+);
+
 export const confirmedAddToReadingList = createAction(
   '[Reading List API] Confirmed add to list',
   props<{ book: Book }>()

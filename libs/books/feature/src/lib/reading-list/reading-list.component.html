@@ -1,7 +1,11 @@
 <ng-container *ngIf="(readingList$ | async).length > 0; else empty">
-  <div class="reading-list-item" *ngFor="let b of readingList$ | async">
+  <div class="read-list-title-container">
+    <span>Book Title</span>|
+    <span>Finished Book Details</span>
+  </div>
+  <div class="reading-list-item" *ngFor="let b of readingList$ | async" data-testing="reading-item">
     <div>
-      <img class="reading-list-item--cover" [src]="b.coverUrl" alt="Cover page of the book" role="img" />
+      <img class="reading-list-item--cover" [src]="b.coverUrl" alt="" />
     </div>
     <div class="reading-list-item--details">
       <strong class="reading-list-item--details--title">{{ b.title }}</strong>
@@ -9,13 +13,38 @@
         {{ b.authors.join(',') }}
       </div>
     </div>
-    <div>
+    <div class="reading-list-container">  
+      <ng-container *ngIf="b.finished">
+        <div matTooltip="Finished date"  [ngClass]="{'finished-list': !b.finished, 'date-col':b.finished}">{{
+          b.finishedDate | date: "M/dd/yyyy"
+        }}</div>
+        <button
+          mat-icon-button
+          [attr.aria-label]="'Finished reading ' + b.title"
+          class="check-box-button-back"
+          matTooltip="Finished reading {{b.title}}"
+          data-testing="bookfinishedbutton"
+          
+        >
+          <mat-icon >check_box</mat-icon>
+        </button>
+      </ng-container>
+      <div class="check-box-button-custom" *ngIf="!b.finished">
+        <mat-checkbox
+          color="warn"
+          matTooltip="Finished reading {{b.title}}"
+          [checked]="b.finished"
+          (change)="markBookRead($event, b)"
+          data-testing="finishbutton"
+        ></mat-checkbox>
+      </div>
       <button
         mat-icon-button
         color="warn"
         [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
+        data-testing="removebutton"
+        matTooltip="Remove {{b.title}} from list"
         (click)="removeFromReadingList(b)"
-        aria-label="Remove book from list"
       >
         <mat-icon>remove_circle</mat-icon>
       </button>

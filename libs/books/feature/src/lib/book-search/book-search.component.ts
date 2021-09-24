@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   addToReadingList,
@@ -9,6 +9,8 @@ import {
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
+import { getBooksError } from '@tmo/books/data-access';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'tmo-book-search',
@@ -16,6 +18,9 @@ import { Book } from '@tmo/shared/models';
   styleUrls: ['./book-search.component.scss']
 })
 export class BookSearchComponent implements OnInit {
+  @ViewChild('search') searchElement: ElementRef;
+  books$: Observable<Book[]> = this.store.select(getAllBooks);
+  bookError$: Observable<String> = this.store.select(getBooksError);
   books: ReadingListBook[];
 
   searchForm = this.fb.group({
@@ -44,7 +49,7 @@ export class BookSearchComponent implements OnInit {
   }
 
   addBookToReadingList(book: Book) {
-    this.store.dispatch(addToReadingList({ book }));
+    this.store.dispatch(addToReadingList({ book}));
   }
 
   searchExample() {

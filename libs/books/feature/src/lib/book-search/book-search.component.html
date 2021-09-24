@@ -1,4 +1,4 @@
-<form [formGroup]="searchForm" (keyup)="searchBooks()" (submit)="searchBooks()" role="search">
+<form [formGroup]="searchForm" (submit)="searchBooks()" role="search">
   <mat-form-field floatLabel="never">
     <input
       autoFocus
@@ -6,7 +6,6 @@
       type="search"
       placeholder="Search for books to add to your reading list"
       formControlName="term"
-      ng-model-options="{debounce: {'default': 500, 'blur': 0}}"
     />
     <button mat-icon-button matSuffix aria-label="search books" role="button">
       <mat-icon>search</mat-icon>
@@ -39,8 +38,9 @@
               [disabled]="b.isAdded"
               aria-label="Want to Read"
               role="button"
+              data-testing="want-to-read-button"
             >
-              Want to Read
+            {{!b.finished?'Want to Read':'Finished'}}
             </button>
           </div>
         </div>
