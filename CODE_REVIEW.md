@@ -10,6 +10,9 @@ Meta descriptions may be included in search results to concisely summarize page 
 3. Usage of double equals in if condition
 Rather than using double or triple equals we can just use if(variable), this gets validated of the value is true.
 
+4. Reducers were not present for failedAddToReadingList and failedRemoveFromReadingList due to which the test cases were failing
+
+
 # Given below are the suggestions to improve the code:
 
 1. Ensure text remains visible during webfont load

@@ -39,7 +39,7 @@ describe('Reading List Reducer', () => {
 
       const result: State = reducer(state, action);
 
-      expect(result.ids).toEqual(state.ids);
+      expect(result.ids).toEqual(['A']);
     });
 
     it('failedRemoveFromReadingList should undo book removal from the state', () => {
@@ -49,7 +49,7 @@ describe('Reading List Reducer', () => {
 
       const result: State = reducer(state, action);
 
-      expect(result.ids).toEqual(state.ids);
+      expect(result.ids).toEqual(['A', 'B', 'C']);
     });
   });
 
