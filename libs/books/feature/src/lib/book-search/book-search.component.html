@@ -1,4 +1,4 @@
-<form [formGroup]="searchForm"  (submit)="searchBooks()" role="search">
+<form [formGroup]="searchForm"  (submit)="searchBooks()">
   <mat-form-field floatLabel="never">
     <input
       autoFocus
@@ -7,7 +7,7 @@
       placeholder="Search for books to add to your reading list"
       formControlName="term"
     />
-    <button mat-icon-button matSuffix aria-label="search books" role="button">
+    <button mat-icon-button matSuffix aria-label="search books">
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
@@ -21,7 +21,7 @@
       </div>
       <div class="book--content">
         <div class="book--content--cover">
-          <img src="{{ b.coverUrl }}" alt="Cover page of the book" role="img"/>
+          <img src="{{ b.coverUrl }}" alt="Cover page of the book"/>
         </div>
         <div class="book--content--info">
           <div><strong>Author:</strong> {{ b.authors.join(',') }}</div>
@@ -37,7 +37,6 @@
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
               aria-label="Want to Read"
-              role="button"
             >
               Want to Read
             </button>
