@@ -16,7 +16,7 @@ import { Book } from '@tmo/shared/models';
   styleUrls: ['./book-search.component.scss']
 })
 export class BookSearchComponent implements OnInit {
-  books: ReadingListBook[];
+  bookList: ReadingListBook[];
 
   searchForm = this.fb.group({
     term: ''
@@ -33,7 +33,7 @@ export class BookSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select(getAllBooks).subscribe(books => {
-      this.books = books;
+      this.bookList = books;
     });
   }
 
