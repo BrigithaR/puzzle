@@ -13,6 +13,18 @@ describe('Books Reducer', () => {
       expect(result.loaded).toBe(true);
       expect(result.ids.length).toBe(3);
     });
+
+    it('should clear the search when clearSearch is triggered', () => {
+      const action = BooksActions.clearSearch();
+      const result: State = reducer(initialState, action);
+      expect(result.ids.length).toBe(0);
+    });
+
+    it('should search for books when searchBooks is triggered', () => {
+      const action = BooksActions.searchBooks({ term: 'javascript' });
+      const result: State = reducer(initialState, action);
+      expect(result.searchTerm).toBe('javascript');
+    });
   });
 
   describe('unknown action', () => {
