@@ -5,26 +5,29 @@ import {
   clearSearch,
   getAllBooks,
   ReadingListBook,
-  searchBooks
+  removeFromReadingList,
+  searchBooks,
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
-  styleUrls: ['./book-search.component.scss']
+  styleUrls: ['./book-search.component.scss'],
 })
 export class BookSearchComponent implements OnInit {
   books: ReadingListBook[];
 
   searchForm = this.fb.group({
-    term: ''
+    term: '',
   });
 
   constructor(
     private readonly store: Store,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private snackbar: MatSnackBar
   ) {}
 
   get searchTerm(): string {
@@ -32,7 +35,7 @@ export class BookSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select(getAllBooks).subscribe(books => {
+    this.store.select(getAllBooks).subscribe((books) => {
       this.books = books;
     });
   }
@@ -44,8 +47,21 @@ export class BookSearchComponent implements OnInit {
   }
 
   addBookToReadingList(book: Book) {
-    const add=false;
-    this.store.dispatch(addToReadingList({ book ,add}));
+    this.store.dispatch(addToReadingList({ book }));
+    const snackbarRef = this.snackbar.open(
+      `Added ${book.title} to Reading List`,
+      'Undo',
+      {
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        duration: 3000,
+      }
+    );
+    snackbarRef.onAction().subscribe(() => {
+      this.store.dispatch(
+        removeFromReadingList({ item: { bookId: book.id, ...book } })
+      );
+    });
   }
 
   searchExample() {
